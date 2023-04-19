@@ -25,3 +25,5 @@ base.price.mean()
 base = base[base.price > 10]
 i2 = base.loc[base.price > 350000]
 base = base.loc[base.price < 350000]
+
+base.loc[pd.isnull(base('vehicleType'))]
