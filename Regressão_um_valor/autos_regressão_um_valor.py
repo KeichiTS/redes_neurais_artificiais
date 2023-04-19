@@ -19,4 +19,9 @@ base['seller'].value_counts()
 base = base.drop('seller', axis = 1)
 base['offerType'].value_counts()
 base = base.drop('offerType', axis = 1)
-base['powerPS'].value_counts()
+
+i1 = base.loc[base.price <= 10]
+base.price.mean()
+base = base[base.price > 10]
+i2 = base.loc[base.price > 350000]
+base = base.loc[base.price < 350000]
