@@ -58,8 +58,8 @@ previsores[:, 8] = labelencoder_previsores.fit_transform(previsores[:, 8])
 previsores[:, 9] = labelencoder_previsores.fit_transform(previsores[:, 9])
 previsores[:, 10] = labelencoder_previsores.fit_transform(previsores[:, 10])
 
-onehotencorder = ColumnTransformer(transformers=[("OneHot", OneHotEncoder(), [0,1,3,5,8,9,10])],remainder='passthrough')
-previsores = onehotencorder.fit_transform(previsores).toarray()
+onehotencoder = ColumnTransformer(transformers=[("OneHot", OneHotEncoder(), [0,1,3,5,8,9,10])],remainder='passthrough')
+previsores = onehotencoder.fit_transform(previsores).toarray()
 
 regressor = Sequential()
 regressor.add(Dense(units=158, activation='relu', input_dim = 316))
