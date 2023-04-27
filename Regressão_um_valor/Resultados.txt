@@ -1,0 +1,19 @@
+'mean_absolute_error':
+Média: -2241.1768641412514
+Desvio: 53.40414180522248
+
+'mean_absolute_percentage_error':
+Média: -3200.459235490349	
+Desvio: 183.23380890268322
+
+'mean_squared_error':
+Média: -2628.3938115922024
+Desvio: 486.54205037413595
+
+'mean_squared_logarithmic_error':
+Média: -188753.3293760724
+Desvio: 288333.04208061245
+
+'squared_hinge':
+Média: -23907.2671169748
+Desvio: 8153.472807391237
