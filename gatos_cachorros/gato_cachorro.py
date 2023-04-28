@@ -9,6 +9,9 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.layers import BatchNormalization
+import numpy as np
+#from keras.preprocessing import image
+from keras.utils import load_img, img_to_array
 
 classificador = Sequential()
 classificador.add(Conv2D(32,(3,3), input_shape = (64,64,3), 
@@ -52,6 +55,14 @@ base_teste = gerador_teste.flow_from_directory('dataset/test_set',
                                                class_mode = 'binary')
 
 classificador.fit_generator(base_treinamento, steps_per_epoch = 4000/32,
-                            epochs = 5, validation_data = base_teste,
+                            epochs = 10, validation_data = base_teste,
                             validation_steps = 1000/32
                             )
+
+imagem_teste = load_img('dataset/test_set/gato/cat.3500.jpg',
+                              target_size = (64,64))
+imagem_teste = img_to_array(imagem_teste)
+imagem_teste /= 255
+imagem_teste = np.expand_dims(imagem_teste, axis = 0)
+previsao = classificador.predict(imagem_teste)
+previsao = (previsao > 0.5)
