@@ -16,7 +16,7 @@ from tensorflow.keras.layers import BatchNormalization
 
 (X_treinamento, y_treinamento), (X_teste, y_teste) = cifar10.load_data()
 
-plt.imshow(X_treinamento[30])
+plt.imshow(X_treinamento[10])
 
 previsores_treinamento = X_treinamento.reshape(X_treinamento.shape[0], 32, 32, 3)
 previsores_teste = X_teste.reshape(X_teste.shape[0], 32, 32, 3)
