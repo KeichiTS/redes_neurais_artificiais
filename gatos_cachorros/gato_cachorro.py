@@ -66,3 +66,5 @@ imagem_teste /= 255
 imagem_teste = np.expand_dims(imagem_teste, axis = 0)
 previsao = classificador.predict(imagem_teste)
 previsao = (previsao > 0.5)
+
+base_treinamento.class_indices
