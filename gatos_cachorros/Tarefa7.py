@@ -13,6 +13,8 @@ from keras.layers import Dense,Flatten, Dropout
 from keras.utils import np_utils
 from keras.layers import Conv2D, MaxPooling2D
 from tensorflow.keras.layers import BatchNormalization
+import numpy as np
+
 
 (X_treinamento, y_treinamento), (X_teste, y_teste) = mnist.load_data()
 plt.imshow(X_treinamento[0], cmap = 'gray')
@@ -53,14 +55,18 @@ classificador.fit(previsores_treinamento, classe_treinamento,
                   batch_size = 128, epochs = 5, 
                   validation_data=(previsores_teste, classe_teste))
 
+
+numero_teste = int(40)
+plt.imshow(X_teste[numero_teste], cmap = 'gray')
+
 resultado = classificador.evaluate(previsores_teste,classe_teste)
 
-imagem_teste = X_teste[0].reshape(1, 28, 28, 1)
+imagem_teste = X_teste[numero_teste].reshape(1, 28, 28, 1)
 
 imagem_teste = imagem_teste.astype('float32')
 imagem_teste /= 255
 
 previsoes = classificador.predict(imagem_teste)
 
-import numpy as np
 resultado = np.argmax(previsoes)
+print(resultado)
