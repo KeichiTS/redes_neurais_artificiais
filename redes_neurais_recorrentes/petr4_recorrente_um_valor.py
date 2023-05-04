@@ -17,3 +17,11 @@ base_treinamento = base.iloc[:,1:2].values
 
 normalizador = MinMaxScaler(feature_range = (0,1))
 base_treinamento_normalizada = normalizador.fit_transform(base_treinamento)
+
+previsores = []
+preco_real = []
+
+for i in range(90, 1242):
+    previsores.append(base_treinamento_normalizada[i-90 :i, 0])
+    preco_real.append(base_treinamento_normalizada[i,0])
+    
