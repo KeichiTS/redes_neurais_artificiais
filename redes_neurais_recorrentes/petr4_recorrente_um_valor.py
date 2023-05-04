@@ -6,9 +6,9 @@ Created on Wed May  3 19:18:11 2023
 """
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, LSTM
 from sklearn.preprocessing import MinMaxScaler
-import numpy as pd 
+import numpy as np
 import pandas as pd
 
 base = pd.read_csv('petr4_treinamento.csv')
@@ -25,3 +25,20 @@ for i in range(90, 1242):
     previsores.append(base_treinamento_normalizada[i-90 :i, 0])
     preco_real.append(base_treinamento_normalizada[i,0])
     
+previsores, preco_real = np.array(previsores), np.array(preco_real)
+previsores = np.reshape(previsores, 
+                        (previsores.shape[0], previsores.shape[1], 1 ))
+
+regressor = Sequential()
+regressor.add(LSTM( units = 100, return_sequences = True,
+                   input_shape = (previsores.shape[1],1 )))
+regressor.add(Dropout(0.3))
+
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(0.3))
+
+regressor.add(Dense( units = 1, activation = 'linear'))
+
+regressor.compile(optimizer = 'rmsprop', loss = 'mean_squared_error',
+                  metrics = ['mean_absolute_error'])
+regressor.fit(previsores, preco_real, epochs = 100, batch_size = 32)
