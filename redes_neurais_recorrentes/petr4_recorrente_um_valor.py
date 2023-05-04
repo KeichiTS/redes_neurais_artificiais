@@ -37,8 +37,36 @@ regressor.add(Dropout(0.3))
 regressor.add(LSTM(units = 50, return_sequences = True))
 regressor.add(Dropout(0.3))
 
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(0.3))
+
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(0.3))
+
+regressor.add(LSTM(units = 50, return_sequences = True))
+regressor.add(Dropout(0.3))
+
+
 regressor.add(Dense( units = 1, activation = 'linear'))
 
 regressor.compile(optimizer = 'rmsprop', loss = 'mean_squared_error',
                   metrics = ['mean_absolute_error'])
 regressor.fit(previsores, preco_real, epochs = 100, batch_size = 32)
+
+base_teste = pd.read_csv('petr4_teste.csv')
+preco_real_teste = base_teste.iloc[:,1:2].values
+base_completa = pd.concat((base['Open'], base_teste['Open']), axis = 0)
+entradas = base_completa[len(base_completa) - len(base_teste) - 90 : ].values
+entradas = entradas.reshape(-1,1)
+entradas = normalizador.transform(entradas)
+
+X_teste = []
+for i in range(90,112):
+    X_teste.append(entradas[i-90:i, 0])
+X_teste = np.array(X_teste)
+X_teste = np.reshape(X_teste, (X_teste.shape[0], X_teste.shape[1],1))
+previsoes = regressor.predict(X_teste)
+previsoes = normalizador.inverse_transform(previsoes)
+
+previsoes.mean()
+preco_real_teste.mean()
