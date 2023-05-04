@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu May  4 13:14:15 2023
+
+@author: KeichiTS
+"""
+
+
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
 from sklearn.preprocessing import MinMaxScaler
@@ -56,3 +64,11 @@ previsoes = normalizador.inverse_transform(previsoes)
 
 previsoes.mean()
 preco_real_teste.mean()
+
+plt.plot(preco_real_teste, color = 'red', label = 'Preo real')
+plt.plot(previsoes, color = 'blue', label = 'Previsões')
+plt.title('Previsão preço das ações')
+plt.xlabel('Tempo')
+plt.ylabel('Valor Yahoo')
+plt.legend()
+plt.show()
