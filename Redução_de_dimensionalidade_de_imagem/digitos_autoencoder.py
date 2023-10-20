@@ -16,3 +16,17 @@ previsores_treinamento = previsores_treinamento.astype('float32') / 255
 previsores_teste = previsores_teste.astype('float32') / 255
 
 previsores_treinamento = previsores_treinamento.reshape(len(previsores_treinamento), np.prod(previsores_treinamento.shape[1:]))
+previsores_teste = previsores_teste.reshape(len(previsores_teste), np.prod(previsores_teste.shape[1:]))
+
+# redução de dimensionalidade de 784 para 32 
+
+fator_compactacao = 784 / 32
+
+autoencoder = Sequential()
+autoencoder.add(Dense(units = 32, activation = 'relu', input_dim = 784))
+autoencoder.add(Dense(units = 784, activation = 'sigmoid'))
+autoencoder.summary()
+autoencoder.compile(optimizer = 'adam', loss = 'binary_crossentropy',
+                    metrics = ['accuracy'])
+autoencoder.fit(previsores_treinamento, previsores_treinamento, epochs = 50, batch_size = 256,
+                validation_data = (previsores_teste, previsores_teste))
